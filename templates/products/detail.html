@@ -1,0 +1,46 @@
+{% extends 'layouts/index.html' %}
+{% load static %}
+
+{% block head  %}
+<link rel="stylesheet" href="{% static 'detail.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="product_block">
+    <div class="image">
+        {% if product.image %}
+        <img src="/media/{{ product.image }}/" alt="">
+        {% else %}
+        <img src="{% static 'img.png' %}" alt="">
+        {% endif %}
+    </div>
+    <div class="info">
+        <h3>{{ product.title }}</h3>
+        <h6>{{ product.description }}</h6>
+        <h5>Rate: {{ product.rate }}</h5>
+        <div class="dates">
+            <p>{{ product.created_date }}</p>
+            <p>{{ product.modified_date }}</p>
+        </div>
+    </div>
+    {% if not user.is_anonymous %}
+    <div class="create_comment">
+        <form action="/products/{{ product.id }}/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Add comment">
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="comments">
+        {% for comment in comments %}
+        <div class="comment_block">
+            <h6>{{ comment.text }}</h6>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

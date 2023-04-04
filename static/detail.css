@@ -1,0 +1,26 @@
+        .product_block {
+            width: 50%;
+            margin-left: 10%;
+            padding: 10px;
+        }
+        .dates {
+            display: flex;
+            justify-content: space-between;
+        }
+        .comments {
+             margin-top: 20px;
+        }
+
+        .comment_block {
+             background: #242b2e;
+             color: #fff;
+             padding: 10px;
+             margin-bottom: 20px;
+             border-radius: 5px;
+
+        }
+
+
+        .image > img {
+        max-width: 50%
+        }
