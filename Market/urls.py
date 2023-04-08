@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from products.views import main_page_view,products_view, product_detail_view, product_create_view
+from products.views import MainPageCBV,ProductsCBV, ProductsDetailCBV, ProductsCreateCBV
 from Market import settings
 from django.conf.urls.static import static
 from users.views import register_view, login_view, logout_view
@@ -23,10 +23,10 @@ from users.views import register_view, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_page_view),
-    path('products/', products_view),
-    path('products/<int:id>/',product_detail_view),
-    path('products/create/', product_create_view),
+    path('', MainPageCBV.as_view()),
+    path('products/', ProductsCBV.as_view()),
+    path('products/<int:id>/', ProductsDetailCBV.as_view()),
+    path('products/create/', ProductsCreateCBV.as_view()),
 
     path('users/register/', register_view),
     path('users/login/', login_view),
