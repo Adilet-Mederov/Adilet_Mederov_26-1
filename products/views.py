@@ -20,7 +20,7 @@ class ProductsCBV(ListView):
     template_name = 'products/products.html'
 
 
-    def get(self, request,**kwargs):
+    def get(self, request, **kwargs):
         products = Products.objects.all().order_by('-created_date', '-rate')
         search = request.GET.get('search')
         page = int(request.GET.get('page', 1))
@@ -50,29 +50,27 @@ class ProductsDetailCBV(DetailView, CreateView):
     form_class = CommentCreateForm
     pk_url_kwarg = 'id'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        return {
-            'product': self.get_object(),
-            'Comments': Comment.objects.filter(product=self.get_object()),
-            'form': kwargs.get('form', self.form_class)
-        }
+
+    def get_context_data(self,* ,objects_list=None  , **kwargs):
+            return {
+                'product': self.get_object(),
+                'comments': Comment.objects.filter(product=self.get_object()),
+                'form': kwargs.get('form', self.form_class)
+            }
 
     def post(self, request, **kwargs):
-        data = request.POST
-        form = CommentCreateForm(data=data)
 
-        if form.is_valid():
-            Comment.objects.create(
-                text=form.cleaned_data.get('text'),
-                product_id=self.get_object().id
-            )
-            return redirect(f'/products/{self.get_object().id}/')
+            form = CommentCreateForm(data=request.POST)
 
-        return render(request, self.template_name, context=self.get_context_data(
-            form=form
-        ))
+            if form.is_valid():
+                Comment.objects.create(
+                    text=form.cleaned_data.get('text'),
+                    product_id=self.get_object().id
+                )
 
+            return redirect(f'/products/{self.get_object().id}')
 
+            return render(request, self.template_name, context=self.get_context_data(form=form))
 
 class ProductsCreateCBV(ListView, CreateView):
     model = Products
