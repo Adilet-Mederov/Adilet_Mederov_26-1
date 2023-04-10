@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
+
 from products.views import MainPageCBV,ProductsCBV, ProductsDetailCBV, ProductsCreateCBV
 from Market import settings
 from django.conf.urls.static import static
-from users.views import register_view, login_view, logout_view
+from users.views import RegisterCBV, LogoutCBV, LoginCBV
 
 
 urlpatterns = [
@@ -28,9 +30,9 @@ urlpatterns = [
     path('products/<int:id>/', ProductsDetailCBV.as_view()),
     path('products/create/', ProductsCreateCBV.as_view()),
 
-    path('users/register/', register_view),
-    path('users/login/', login_view),
-    path('users/logout', logout_view)
+    path('users/register/', RegisterCBV.as_view()),
+    path('users/login/', LoginCBV.as_view()),
+    path('users/logout', LogoutCBV.as_view())
 
 
 ]
